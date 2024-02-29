@@ -107,8 +107,8 @@ class Browser:
         body = url.request()
         URL.show(body)
         text = URL.lex(body)
-        display_list = Browser.layout(text) 
-        Browser.draw(self, display_list)
+        self.display_list = Browser.layout(text) 
+        self.draw()
 
     def layout(text):
         display_list = []
@@ -126,10 +126,13 @@ class Browser:
         return display_list
     
 
-    def draw(self, display_list):
+    def draw(self):
         cursor_x, cursor_y = HSTEP, VSTEP
         self.canvas.delete("all")
-        for x, y, c in display_list:
+        for x, y, c in self.display_list:
+            if y > self.scroll + HEIGHT: continue
+            if y + VSTEP < self.scroll: continue
+
             self.canvas.create_text(x, y - self.scroll, text=c)
             
 
