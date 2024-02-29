@@ -115,6 +115,11 @@ class Browser:
         cursor_x, cursor_y = HSTEP, VSTEP
 
         for c in text:
+            if c == "\n" or c== "\r\n":
+                cursor_y += VSTEP
+                cursor_x = HSTEP
+                continue
+
             display_list.append((cursor_x,  cursor_y, c)) 
             cursor_x += HSTEP
 
